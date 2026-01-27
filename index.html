@@ -8,31 +8,41 @@
 </head>
 <body>
 
-<header>
-  <h1>📦 APK Store</h1>
-  <p>Aplikasi buatan saya sendiri</p>
+<header class="top">
+  <h1>📱 APK Store</h1>
+  <p>Koleksi aplikasi buatan saya sendiri</p>
 </header>
 
-<main id="app-list"></main>
-
-<footer>
-  <p>© 2026 • My Private APK Store</p>
-</footer>
+<section class="container" id="app-list"></section>
 
 <script>
 fetch('apps.json')
   .then(res => res.json())
   .then(apps => {
-    const container = document.getElementById('app-list');
+    const el = document.getElementById('app-list');
+
     apps.forEach(app => {
-      container.innerHTML += `
-        <div class="card">
-          <img src="${app.icon}" alt="${app.name}">
-          <div class="info">
-            <h2>${app.name}</h2>
+      el.innerHTML += `
+        <div class="app-card">
+          <img src="${app.icon}" class="app-icon" alt="${app.name}">
+          
+          <div class="app-body">
+            <div class="app-header">
+              <h2>${app.name}</h2>
+              <span class="badge">v${app.version}</span>
+            </div>
+
             <p class="desc">${app.description}</p>
-            <span class="version">v${app.version}</span>
-            <a href="${app.url}" download>⬇ Download APK</a>
+
+            <div class="actions">
+              <a class="btn primary" href="${app.url}" download>
+                ⬇ Download APK
+              </a>
+
+              <a class="btn secondary" href="${app.note}" download>
+                📝 Download Catatan
+              </a>
+            </div>
           </div>
         </div>
       `;
