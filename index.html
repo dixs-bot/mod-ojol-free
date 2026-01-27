@@ -1,45 +1,592 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>APK Store Pribadi</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MY APK STORE | Cyberpunk Edition</title>
+    <!-- Mengambil Font Futuristik dari Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome untuk Ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --bg-dark: #050505;
+            --bg-panel: #0a0a12;
+            --neon-cyan: #00f3ff;
+            --neon-pink: #bc13fe;
+            --neon-yellow: #f1ff45;
+            --text-main: #e0e0e0;
+            --text-muted: #8892b0;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --font-heading: 'Orbitron', sans-serif;
+            --font-body: 'Rajdhani', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                linear-gradient(rgba(0, 243, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 243, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px; /* Efek Grid Halus */
+        }
+
+        /* --- UTILITIES --- */
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+        
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Judul Section */
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-left: 5px solid var(--neon-pink);
+            padding-left: 15px;
+            text-shadow: 0 0 10px rgba(188, 19, 254, 0.5);
+        }
+
+        /* --- HEADER & NAVIGATION --- */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(5, 5, 5, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--glass-border);
+            padding: 15px 0;
+        }
+
+        .nav-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--neon-cyan);
+            text-shadow: 0 0 5px var(--neon-cyan);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .search-bar {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            background: var(--bg-panel);
+            border: 1px solid var(--neon-cyan);
+            padding: 10px 15px;
+            padding-right: 40px;
+            color: var(--text-main);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            border-radius: 4px;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 243, 255, 0.2);
+        }
+
+        .search-bar input:focus {
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.5);
+        }
+
+        .search-bar i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--neon-cyan);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            padding: 120px 0 60px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-content h1 {
+            font-family: var(--font-heading);
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, var(--neon-cyan), #fff, var(--neon-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-cyber {
+            display: inline-block;
+            padding: 12px 30px;
+            background: transparent;
+            color: var(--neon-cyan);
+            border: 2px solid var(--neon-cyan);
+            font-family: var(--font-heading);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: 0.3s;
+            clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
+        }
+
+        .btn-cyber:hover {
+            background: var(--neon-cyan);
+            color: var(--bg-dark);
+            box-shadow: 0 0 20px var(--neon-cyan);
+        }
+
+        .btn-cyber.pink {
+            color: var(--neon-pink);
+            border-color: var(--neon-pink);
+        }
+        
+        .btn-cyber.pink:hover {
+            background: var(--neon-pink);
+            color: #fff;
+            box-shadow: 0 0 20px var(--neon-pink);
+        }
+
+        /* --- CATEGORY PILLS --- */
+        .categories {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .cat-pill {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .cat-pill:hover, .cat-pill.active {
+            border-color: var(--neon-pink);
+            color: var(--neon-pink);
+            box-shadow: 0 0 10px rgba(188, 19, 254, 0.3);
+        }
+
+        /* --- APP GRID --- */
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .app-card {
+            background: var(--bg-panel);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: 0.3s;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .app-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--neon-cyan);
+            box-shadow: 0 5px 20px rgba(0, 243, 255, 0.15);
+        }
+
+        .card-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: var(--neon-yellow);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border: 1px solid var(--neon-yellow);
+        }
+
+        .app-icon {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .card-body {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .app-title {
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            color: #fff;
+        }
+
+        .app-dev {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        .app-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .rating {
+            color: var(--neon-yellow);
+        }
+
+        .download-btn {
+            margin-top: auto;
+            width: 100%;
+            padding: 10px;
+            background: linear-gradient(45deg, rgba(0, 243, 255, 0.1), rgba(188, 19, 254, 0.1));
+            border: 1px solid var(--neon-cyan);
+            color: var(--text-main);
+            text-align: center;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .download-btn:hover {
+            background: var(--neon-cyan);
+            color: #000;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: #020202;
+            padding: 40px 0;
+            border-top: 1px solid var(--glass-border);
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .footer-logo {
+            font-family: var(--font-heading);
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        .social-links {
+            margin: 20px 0;
+        }
+
+        .social-links a {
+            margin: 0 10px;
+            font-size: 1.2rem;
+            color: var(--text-muted);
+        }
+
+        .social-links a:hover {
+            color: var(--neon-cyan);
+        }
+
+        .copyright {
+            font-size: 0.8rem;
+            color: #444;
+        }
+
+        /* --- NOTIFICATION TOAST --- */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--bg-panel);
+            border: 1px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            padding: 15px 25px;
+            border-radius: 5px;
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
+            transform: translateY(100px);
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .toast.show {
+            transform: translateY(0);
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 2.2rem; }
+            .nav-wrapper { flex-direction: column; gap: 15px; }
+            .search-bar { width: 100%; }
+        }
+    </style>
 </head>
 <body>
 
-<header class="top">
-  <h1>📦 APK Store</h1>
-  <p>Koleksi aplikasi buatan saya</p>
-</header>
-
-<section class="grid" id="app-list"></section>
-
-<script>
-fetch('apps.json')
-  .then(res => res.json())
-  .then(apps => {
-    const el = document.getElementById('app-list');
-
-    apps.forEach(app => {
-      el.innerHTML += `
-        <div class="app-card">
-          <img src="${app.icon}" class="app-icon" alt="${app.name}">
-          
-          <h2>${app.name}</h2>
-          <span class="badge">v${app.version}</span>
-
-          <p class="desc">${app.description}</p>
-
-          <div class="actions">
-            <a class="btn primary" href="${app.url}" download>⬇ APK</a>
-            <a class="btn secondary" href="${app.note}" download>📝 TXT</a>
-          </div>
+    <!-- Header -->
+    <header>
+        <div class="container nav-wrapper">
+            <div class="logo">
+                <i class="fa-solid fa-robot"></i> MY APK STORE
+            </div>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Cari aplikasi, game, mod...">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
         </div>
-      `;
-    });
-  });
-</script>
+    </header>
 
+    <!-- Main Content -->
+    <main class="container">
+        
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>MASA DEPAN<br>APK ANDROID</h1>
+                <p>Platform unduhan aplikasi termodifikasi, game premium, dan tools eksklusif dengan kecepatan tinggi dan keamanan terjamin.</p>
+                <div style="display: flex; justify-content: center; gap: 15px;">
+                    <a href="#featured" class="btn-cyber">Jelajahi</a>
+                    <a href="#" class="btn-cyber pink">Upload APK</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Categories -->
+        <section class="categories">
+            <div class="cat-pill active"><i class="fa-solid fa-fire"></i> Populer</div>
+            <div class="cat-pill"><i class="fa-solid fa-gamepad"></i> Games</div>
+            <div class="cat-pill"><i class="fa-solid fa-wrench"></i> Tools & Mod</div>
+            <div class="cat-pill"><i class="fa-solid fa-shield-halved"></i> Security</div>
+            <div class="cat-pill"><i class="fa-solid fa-images"></i> Wallpaper</div>
+        </section>
+
+        <!-- Featured Apps Grid -->
+        <section id="featured">
+            <h2 class="section-title">Aplikasi Unggulan</h2>
+            <div class="app-grid" id="appContainer">
+                
+                <!-- Card 1 -->
+                <article class="app-card">
+                    <div class="card-badge">MOD</div>
+                    <img src="https://picsum.photos/seed/cyber1/400/300" alt="App Icon" class="app-icon">
+                    <div class="card-body">
+                        <h3 class="app-title">Cyber Racing X</h3>
+                        <p class="app-dev">Oleh: NeonStudio</p>
+                        <div class="app-meta">
+                            <span><i class="fa-solid fa-code-branch"></i> v2.4.0</span>
+                            <span class="rating"><i class="fa-solid fa-star"></i> 4.8</span>
+                        </div>
+                        <button class="download-btn" onclick="startDownload('Cyber Racing X')">
+                            <i class="fa-solid fa-download"></i> UNDUH (45MB)
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Card 2 -->
+                <article class="app-card">
+                    <img src="https://picsum.photos/seed/cyber2/400/300" alt="App Icon" class="app-icon">
+                    <div class="card-body">
+                        <h3 class="app-title">System Tweaker Pro</h3>
+                        <p class="app-dev">Oleh: DevRoot</p>
+                        <div class="app-meta">
+                            <span><i class="fa-solid fa-code-branch"></i> v1.0.5</span>
+                            <span class="rating"><i class="fa-solid fa-star"></i> 4.5</span>
+                        </div>
+                        <button class="download-btn" onclick="startDownload('System Tweaker Pro')">
+                            <i class="fa-solid fa-download"></i> UNDUH (12MB)
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Card 3 -->
+                <article class="app-card">
+                    <div class="card-badge">PRO</div>
+                    <img src="https://picsum.photos/seed/cyber3/400/300" alt="App Icon" class="app-icon">
+                    <div class="card-body">
+                        <h3 class="app-title">Neon Music Player</h3>
+                        <p class="app-dev">Oleh: AudioWave</p>
+                        <div class="app-meta">
+                            <span><i class="fa-solid fa-code-branch"></i> v3.1.2</span>
+                            <span class="rating"><i class="fa-solid fa-star"></i> 4.9</span>
+                        </div>
+                        <button class="download-btn" onclick="startDownload('Neon Music Player')">
+                            <i class="fa-solid fa-download"></i> UNDUH (25MB)
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Card 4 -->
+                <article class="app-card">
+                    <img src="https://picsum.photos/seed/cyber4/400/300" alt="App Icon" class="app-icon">
+                    <div class="card-body">
+                        <h3 class="app-title">VPN Ultra Secure</h3>
+                        <p class="app-dev">Oleh: NetGuard</p>
+                        <div class="app-meta">
+                            <span><i class="fa-solid fa-code-branch"></i> v5.0.0</span>
+                            <span class="rating"><i class="fa-solid fa-star"></i> 4.2</span>
+                        </div>
+                        <button class="download-btn" onclick="startDownload('VPN Ultra Secure')">
+                            <i class="fa-solid fa-download"></i> UNDUH (18MB)
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Card 5 -->
+                <article class="app-card">
+                    <div class="card-badge">HOT</div>
+                    <img src="https://picsum.photos/seed/cyber5/400/300" alt="App Icon" class="app-icon">
+                    <div class="card-body">
+                        <h3 class="app-title">Galaxy Strategy</h3>
+                        <p class="app-dev">Oleh: SpaceGames</p>
+                        <div class="app-meta">
+                            <span><i class="fa-solid fa-code-branch"></i> v1.2.3</span>
+                            <span class="rating"><i class="fa-solid fa-star"></i> 4.7</span>
+                        </div>
+                        <button class="download-btn" onclick="startDownload('Galaxy Strategy')">
+                            <i class="fa-solid fa-download"></i> UNDUH (120MB)
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Card 6 -->
+                <article class="app-card">
+                    <img src="https://picsum.photos/seed/cyber6/400/300" alt="App Icon" class="app-icon">
+                    <div class="card-body">
+                        <h3 class="app-title">Photo Editor Glitch</h3>
+                        <p class="app-dev">Oleh: PixelArt</p>
+                        <div class="app-meta">
+                            <span><i class="fa-solid fa-code-branch"></i> v2.0.1</span>
+                            <span class="rating"><i class="fa-solid fa-star"></i> 4.6</span>
+                        </div>
+                        <button class="download-btn" onclick="startDownload('Photo Editor Glitch')">
+                            <i class="fa-solid fa-download"></i> UNDUH (35MB)
+                        </button>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-logo">MY APK STORE</div>
+            <p style="color: #666;">Akses tak terbatas ke dunia digital tanpa batas.</p>
+            <div class="social-links">
+                <a href="#"><i class="fa-brands fa-github"></i></a>
+                <a href="#"><i class="fa-brands fa-telegram"></i></a>
+                <a href="#"><i class="fa-brands fa-discord"></i></a>
+            </div>
+            <p class="copyright">&copy; 2023 My APK Store. Cyberpunk Edition.</p>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="toastMsg">Memulai unduhan...</span>
+    </div>
+
+    <!-- JavaScript Interactivity -->
+    <script>
+        // 1. Fitur Pencarian Sederhana
+        const searchInput = document.getElementById('searchInput');
+        const cards = document.querySelectorAll('.app-card');
+
+        searchInput.addEventListener('keyup', (e) => {
+            const term = e.target.value.toLowerCase();
+
+            cards.forEach(card => {
+                const title = card.querySelector('.app-title').textContent.toLowerCase();
+                const dev = card.querySelector('.app-dev').textContent.toLowerCase();
+                
+                if(title.includes(term) || dev.includes(term)) {
+                    card.style.display = "flex";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        });
+
+        // 2. Kategori Filter (Visual Saja)
+        const catPills = document.querySelectorAll('.cat-pill');
+        catPills.forEach(pill => {
+            pill.addEventListener('click', () => {
+                // Hapus kelas aktif dari semua
+                catPills.forEach(p => p.classList.remove('active'));
+                // Tambah kelas aktif ke yang diklik
+                pill.classList.add('active');
+            });
+        });
+
+        // 3. Simulasi Download Toast
+        function startDownload(appName) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toastMsg');
+            
+            toastMsg.textContent = `Mengunduh ${appName}...`;
+            toast.classList.add('show');
+
+            // Hilangkan toast setelah 3 detik
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+    </script>
 </body>
 </html>
