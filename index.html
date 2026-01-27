@@ -9,11 +9,11 @@
 <body>
 
 <header class="top">
-  <h1>📱 APK Store</h1>
-  <p>Koleksi aplikasi buatan saya sendiri</p>
+  <h1>📦 APK Store</h1>
+  <p>Koleksi aplikasi buatan saya</p>
 </header>
 
-<section class="container" id="app-list"></section>
+<section class="grid" id="app-list"></section>
 
 <script>
 fetch('apps.json')
@@ -26,23 +26,14 @@ fetch('apps.json')
         <div class="app-card">
           <img src="${app.icon}" class="app-icon" alt="${app.name}">
           
-          <div class="app-body">
-            <div class="app-header">
-              <h2>${app.name}</h2>
-              <span class="badge">v${app.version}</span>
-            </div>
+          <h2>${app.name}</h2>
+          <span class="badge">v${app.version}</span>
 
-            <p class="desc">${app.description}</p>
+          <p class="desc">${app.description}</p>
 
-            <div class="actions">
-              <a class="btn primary" href="${app.url}" download>
-                ⬇ Download APK
-              </a>
-
-              <a class="btn secondary" href="${app.note}" download>
-                📝 Download Catatan
-              </a>
-            </div>
+          <div class="actions">
+            <a class="btn primary" href="${app.url}" download>⬇ APK</a>
+            <a class="btn secondary" href="${app.note}" download>📝 TXT</a>
           </div>
         </div>
       `;
